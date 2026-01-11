@@ -6,10 +6,12 @@
 git clone git@github.com:ChuAn7One/Useful-Manual-Data-Annotation.git
 ```
 
-下在仓库后，应当在标注前安装相关依赖，可在终端内运行：
+下载仓库后，应当在标注前安装相关依赖，可在终端内运行：
 
 ```
-pip install -r requirements.txt
+pip install natsort
+pip install argparse
+pip install opencv-python
 ```
 
 ## Guide
