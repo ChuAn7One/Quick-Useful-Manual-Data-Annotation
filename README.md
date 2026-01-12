@@ -49,27 +49,32 @@ pip install opencv-python
 
 安装了依赖且了解了使用方法后，可直接运行，
 ```
-python3 auto_annotation.py --dataset_path ./group_**/ --start *
+python3 auto_annotation.py --dataset_path ./group_**/ --start * --screen_ratio *
 ```
 或
 ```
-python auto_annotation.py --dataset_path ./group_**/ --start *
+python auto_annotation.py --dataset_path ./group_**/ --start * --screen_ratio *
 ```
 
 其中，
-`--dataset_path`代表数据集路径，每次只能输入一个文件夹；`--start`代表从第`*`张开始标注，这里的`*`是以`1`起始的正整数，而非数组索引计数。
+`--dataset_path`代表数据集路径，每次只能输入一个文件夹；`--start`代表从第`*`张开始标注，这里的`*`是以`1`起始的正整数，而非数组索引计数；`--screen_ratio`代表图片相比原图的放大倍数。
 
 ### Example
 ```
-python3 auto_annotation.py --dataset_path ./group_01/ --start 1
+python3 auto_annotation.py --dataset_path ./group_01/ --start 1 --screen_ratio 2.0
 ```
-上述代码块代表，在`group_01`文件夹下创建`Metas.json`，从第`1`张图片开始标注，所以**标注完成时，一定要记住标注到哪一张，避免之后标注时仍然从第一张开始（默认从第一张开始标注）**。
+上述代码块代表，在`group_01`文件夹下创建`Metas.json`，从第`1`张图片开始标注，且图片放大倍数为`2`，所以**标注完成时，一定要记住标注到哪一张，避免之后标注时仍然从第一张开始（默认从第一张开始标注）**。
 
 ### Note
 ``
 --start
 ``
 默认值为`1`，故建议按照**Directly Run**中的方式运行。
+
+``
+--screen_ratio
+``
+默认值为`2`，代表图片相比原图放大两倍。
 
 ``
 ├── group_**

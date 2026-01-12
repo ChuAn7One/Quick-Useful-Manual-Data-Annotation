@@ -8,7 +8,7 @@ import metas_create
 
 level = ['defective', 'flawed', 'mediocre', 'standard', 'good', 'fine', 'excellent', 'superior', 'exceptional', 'exemplary']
 score = [0,0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
-perfect_description = "The picture is clear and complete. "
+perfect_description = "The image is clear and complete. "
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Auto annotation script.")
@@ -24,6 +24,13 @@ def parse_args():
         default=1,
         help="Start index for annotation. Must be >= 1.",
         choices=range(1, 647)
+    )
+    parser.add_argument(
+        "--screen_ratio",
+        type=float,
+        default=2,
+        help="Zoom the image.",
+        choices=range(1,4)
     )
     return parser.parse_args()
 
@@ -119,21 +126,31 @@ def annotate_task(img_name: str, json_data, index):
                 default_description=default_description
             )
 
-def show_and_annotate(start: int, files_path: str):
+def show_and_annotate(start: int, files_path: str, screen_ratio: int):
     if not os.path.exists(os.path.join(files_path, "Metas.json")):
         metas_create.create_metas_jsons(files_path)
     
     with open(os.path.join(files_path, "Metas.json"), 'r', encoding='utf-8') as f:
         json_data = json.load(f)
-    
+
     print(f"Starting from index {start}, displaying images for annotation...")
 
     for i in range(start - 1, len(json_data)):
+        print(f"This is {i+1}-th image.")
         img_path = os.path.join(files_path, json_data[i]["image_path"])
         img = cv2.imread(img_path)
         img_name = os.path.basename(img_path)
 
-        cv2.imshow(img_name, img)
+        cv2.namedWindow(img_name, cv2.WINDOW_GUI_NORMAL)
+        cv2.setWindowProperty(img_name, cv2.WND_PROP_TOPMOST, 1)
+
+        h, w = img.shape[ : 2]
+        target_h, target_w = int(h * screen_ratio), int(w * screen_ratio)
+        img_show = cv2.resize(img, (target_w, target_h), interpolation=cv2.INTER_CUBIC)
+
+        cv2.resizeWindow(img_name, target_w, target_h)
+        cv2.moveWindow(img_name, 0, 0)
+        cv2.imshow(img_name, img_show)
 
         t = threading.Thread(target=annotate_task, args=(img_name, json_data, i))
         t.daemon = True
@@ -144,12 +161,12 @@ def show_and_annotate(start: int, files_path: str):
         
         with open(os.path.join(files_path, "Metas.json"), 'w', encoding='utf-8') as f:
             json.dump(json_data, f, indent=4, ensure_ascii=False)
-        
+
+        cv2.destroyAllWindows()
         print("---------------------------------------------------------------------")
 
     print(f"Annotation completed for all images of {files_path}.")
-    cv2.destroyAllWindows()
 
 if __name__ == "__main__":
     args = parse_args()
-    show_and_annotate(args.start, args.dataset_path)
+    show_and_annotate(args.start, args.dataset_path, args.screen_ratio)

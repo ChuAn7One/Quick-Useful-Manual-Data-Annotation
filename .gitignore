@@ -1,5 +1,7 @@
 Metas.json
 
 __pycache__/
+.*/
 
-group*
+group_*
+*.docx
