@@ -63,7 +63,7 @@ python auto_annotation.py --dataset_path ./group_**/ --start * --screen_ratio *
 ```
 python3 auto_annotation.py --dataset_path ./group_01/ --start 1 --screen_ratio 2.0
 ```
-上述代码块代表，在`group_01`文件夹下创建`Metas.json`，从第`1`张图片开始标注，且图片放大倍数为`2`，所以**标注完成时，一定要记住标注到哪一张，避免之后标注时仍然从第一张开始（默认从第一张开始标注）**。
+上述代码块代表在`group_01`文件夹下创建`Metas.json`，从第`1`张图片开始标注，且图片放大倍数为`2`，所以**标注完成时，一定要记住标注到哪一张，避免之后标注时仍然从第一张开始（默认从第一张开始标注）**。
 
 ### Note
 ``
