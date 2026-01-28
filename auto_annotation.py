@@ -7,7 +7,7 @@ import os
 import metas_create
 
 level = ['defective', 'flawed', 'mediocre', 'standard', 'good', 'fine', 'excellent', 'superior', 'exceptional', 'exemplary']
-score = [0,0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+score = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 perfect_description = "The image is clear and complete. "
 
 def parse_args():
@@ -29,8 +29,7 @@ def parse_args():
         "--screen_ratio",
         type=float,
         default=2,
-        help="Zoom the image.",
-        choices=range(1,4)
+        help="Zoom the image."
     )
     return parser.parse_args()
 
